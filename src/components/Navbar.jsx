@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { LogOut, Bell, ChevronDown, Menu } from "lucide-react";
 import logo from "../assets/cropcoralogo.png";
 import avatar from "../assets/default.jpg";
@@ -6,6 +7,7 @@ import avatar from "../assets/default.jpg";
 export default function Navbar({ onMenuClick }) {
   const [unresolvedAlerts] = useState(3);
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate(); // <-- Add this
 
   const user = {
     bankName: "Demo Bank",
@@ -13,7 +15,9 @@ export default function Navbar({ onMenuClick }) {
   };
 
   const handleLogout = () => {
+    // Perform any cleanup if needed, e.g., clear tokens
     console.log("Logging out...");
+    navigate("/login"); // <-- Navigate to login page
   };
 
   return (
@@ -21,8 +25,6 @@ export default function Navbar({ onMenuClick }) {
       
       {/* LEFT */}
       <div className="flex items-center gap-3 sm:gap-6">
-        
-        {/* Hamburger (mobile only) */}
         <button
           onClick={onMenuClick}
           className="p-2 rounded-md hover:bg-gray-100 lg:hidden"
@@ -30,14 +32,12 @@ export default function Navbar({ onMenuClick }) {
           <Menu className="w-6 h-6 text-gray-700" />
         </button>
 
-        {/* Logo */}
         <img
           src={logo}
           alt="CropCura Logo"
           className="w-24 sm:w-28 md:w-32 h-auto object-contain"
         />
 
-        {/* Demo Mode */}
         <div className="hidden md:flex items-center gap-2 px-2 py-0.5 rounded-full bg-green-100 border border-green-200">
           <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
           <span className="text-xs font-medium text-green-600">
@@ -48,8 +48,6 @@ export default function Navbar({ onMenuClick }) {
 
       {/* RIGHT */}
       <div className="flex items-center gap-3 relative">
-        
-        {/* Alerts */}
         <button className="relative p-2 rounded-full hover:bg-gray-100">
           <Bell className="w-5 h-5 text-gray-700" />
           {unresolvedAlerts > 0 && (
@@ -59,7 +57,6 @@ export default function Navbar({ onMenuClick }) {
           )}
         </button>
 
-        {/* Profile Dropdown */}
         <div className="relative">
           <button
             onClick={() => setOpen(!open)}
@@ -70,7 +67,6 @@ export default function Navbar({ onMenuClick }) {
               alt="Profile"
               className="w-8 h-8 rounded-full object-cover border border-gray-200"
             />
-
             <ChevronDown className="w-4 h-4 text-gray-600 hidden sm:block" />
           </button>
 
@@ -86,7 +82,7 @@ export default function Navbar({ onMenuClick }) {
               </div>
 
               <button
-                onClick={handleLogout}
+                onClick={handleLogout} // <-- now navigates to /login
                 className="w-full flex items-center gap-2 px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition rounded-b-xl"
               >
                 <LogOut className="w-4 h-4" />
