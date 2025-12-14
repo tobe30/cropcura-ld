@@ -45,20 +45,8 @@ export default function Farmers() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const cropIcons = {
-    maize: '🌽',
-    rice: '🌾',
-    cassava: '🥔',
-    wheat: '🌿',
-    soybeans: '🫘',
-  };
-
-  const riskColors = {
-    low: 'bg-green-100 text-green-700',
-    medium: 'bg-yellow-100 text-yellow-800',
-    high: 'bg-red-100 text-red-700',
-  };
-
+  const cropIcons = { maize: '🌽', rice: '🌾', cassava: '🥔', wheat: '🌿', soybeans: '🫘' };
+  const riskColors = { low: 'bg-green-100 text-green-700', medium: 'bg-yellow-100 text-yellow-800', high: 'bg-red-100 text-red-700' };
   const riskOptions = [
     { label: 'All Risk Levels', value: 'all' },
     { label: 'Low Risk', value: 'low' },
@@ -89,7 +77,7 @@ export default function Farmers() {
   };
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-6 p-4 sm:p-6">
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-gray-800">Farm Directory</h1>
@@ -97,9 +85,9 @@ export default function Farmers() {
       </div>
 
       {/* Filters */}
-      <div className="flex flex-col sm:flex-row gap-4 items-center">
+      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center w-full">
         {/* Search Input */}
-        <div className="relative flex-1 max-w-md">
+        <div className="relative flex-1 w-full sm:max-w-md">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
           <input
             type="text"
@@ -110,14 +98,14 @@ export default function Farmers() {
           />
         </div>
 
-        {/* Custom Risk Dropdown */}
-        <div className="relative" ref={dropdownRef}>
+        {/* Risk Dropdown */}
+        <div className="relative w-full sm:w-48" ref={dropdownRef}>
           <button
             onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="flex items-center justify-between px-4 py-2 border border-gray-300 rounded-lg shadow-sm bg-white text-black w-48 focus:ring-2 focus:ring-blue-300"
+            className="flex items-center justify-between px-4 py-2 border border-gray-300 rounded-lg shadow-sm bg-white text-black w-full sm:w-auto focus:ring-2 focus:ring-blue-300"
           >
             {riskOptions.find(opt => opt.value === riskFilter)?.label}
-            <ChevronDown className="w-4 h-4 text-white ml-2" />
+            <ChevronDown className="w-4 h-4 text-gray-600 ml-2" />
           </button>
           {dropdownOpen && (
             <ul className="absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-10">
@@ -125,9 +113,7 @@ export default function Farmers() {
                 <li
                   key={option.value}
                   onClick={() => { setRiskFilter(option.value); setDropdownOpen(false); }}
-                  className={`cursor-pointer px-4 py-2 hover:bg-gray-100 flex justify-between items-center ${
-                    option.value !== 'all' ? riskColors[option.value] : ''
-                  }`}
+                  className={`cursor-pointer px-4 py-2 hover:bg-gray-100 flex justify-between items-center ${option.value !== 'all' ? riskColors[option.value] : ''}`}
                 >
                   {option.label}
                 </li>
@@ -136,29 +122,23 @@ export default function Farmers() {
           )}
         </div>
 
-        {/* View toggle */}
-        <div className="flex items-center gap-1 bg-white border border-gray-300 rounded-lg p-1">
-          <button
-            className={`px-3 py-1 ${viewMode === 'grid' ? 'bg-gray-300 rounded' : ''}`}
-            onClick={() => setViewMode('grid')}
-          >
+        {/* View Toggle */}
+        <div className="flex items-center gap-1 bg-white border border-gray-300 rounded-lg p-1 w-full sm:w-auto justify-center">
+          <button className={`px-3 py-1 ${viewMode === 'grid' ? 'bg-gray-300 rounded' : ''}`} onClick={() => setViewMode('grid')}>
             <LayoutGrid className="w-4 h-4" />
           </button>
-          <button
-            className={`px-3 py-1 ${viewMode === 'list' ? 'bg-gray-300 rounded' : ''}`}
-            onClick={() => setViewMode('list')}
-          >
+          <button className={`px-3 py-1 ${viewMode === 'list' ? 'bg-gray-300 rounded' : ''}`} onClick={() => setViewMode('list')}>
             <List className="w-4 h-4" />
           </button>
         </div>
       </div>
 
-      {/* Results count */}
+      {/* Results Count */}
       <p className="text-sm text-gray-500">Showing {filteredFarmers.length} of {farmers.length} farmers</p>
 
       {/* Grid View */}
       {viewMode === 'grid' && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
           {filteredFarmers.map(farmer => (
             <div
               key={farmer.id}
@@ -195,8 +175,8 @@ export default function Farmers() {
 
       {/* List View */}
       {viewMode === 'list' && (
-        <div className="border border-gray-200 rounded-xl overflow-hidden shadow-sm">
-          <table className="w-full text-left bg-white">
+        <div className="border border-gray-200 rounded-xl overflow-x-auto shadow-sm">
+          <table className="w-full min-w-[600px] text-left bg-white">
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-4 py-2">Farmer</th>
