@@ -91,14 +91,14 @@ export default function Alerts() {
   const criticalCount = alerts.filter(a => a.type === 'critical' && !a.isResolved).length;
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-6 p-4 sm:p-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold">Risk Alerts</h1>
           <p className="text-gray-500 mt-1">Monitor and respond to farmer risk notifications</p>
         </div>
-        <div className="flex gap-4 mt-4 sm:mt-0">
+        <div className="flex gap-4 flex-wrap">
           <div className="text-right">
             <p className="text-2xl font-bold">{unresolvedCount}</p>
             <p className="text-sm text-gray-500">Unresolved</p>
@@ -115,7 +115,7 @@ export default function Alerts() {
       {/* Filters */}
       <div className="flex flex-wrap gap-4 items-center">
         {/* Dropdown */}
-        <div className="relative w-48">
+        <div className="relative w-full sm:w-48">
           <button
             className="w-full flex justify-between items-center px-4 py-2 border border-gray-300 rounded-lg bg-white hover:bg-gray-50"
             onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -155,52 +155,50 @@ export default function Alerts() {
         {filteredAlerts.map((alert, idx) => (
           <div
             key={alert.id}
-            className={`flex gap-4 p-5 rounded-xl border transition-opacity duration-300 ${getAlertStyles(alert.type)} ${alert.isResolved ? 'opacity-60' : 'opacity-100'}`}
+            className={`flex flex-col sm:flex-row gap-4 p-4 sm:p-5 rounded-xl border transition-opacity duration-300 ${getAlertStyles(alert.type)} ${alert.isResolved ? 'opacity-60' : 'opacity-100'}`}
             style={{ animationDelay: `${idx*50}ms` }}
           >
             <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${getIconStyles(alert.type)}`}>
               {getAlertIcon(alert.type)}
             </div>
 
-            <div className="flex-1 min-w-0">
-              <div className="flex justify-between items-start gap-4">
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className={`text-xs font-semibold px-2 py-0.5 rounded ${alert.type==='critical'?'bg-red-200 text-red-600': alert.type==='warning'?'bg-yellow-200 text-yellow-600':'bg-blue-200 text-blue-600'}`}>
-                      {alert.type.toUpperCase()}
+            <div className="flex-1 min-w-0 flex flex-col sm:flex-row justify-between">
+              <div className="flex-1 min-w-0">
+                <div className="flex flex-wrap items-center gap-2 mb-1">
+                  <span className={`text-xs font-semibold px-2 py-0.5 rounded ${alert.type==='critical'?'bg-red-200 text-red-600': alert.type==='warning'?'bg-yellow-200 text-yellow-600':'bg-blue-200 text-blue-600'}`}>
+                    {alert.type.toUpperCase()}
+                  </span>
+                  {alert.isResolved && (
+                    <span className="text-xs font-medium text-green-600 flex items-center gap-1">
+                      <CheckCircle className="w-3 h-3" /> Resolved
                     </span>
-                    {alert.isResolved && (
-                      <span className="text-xs font-medium text-green-600 flex items-center gap-1">
-                        <CheckCircle className="w-3 h-3" /> Resolved
-                      </span>
-                    )}
-                  </div>
-                  <h3 className="font-semibold">{alert.farmerName}</h3>
-                  <p className="text-sm text-gray-500 mt-1">{alert.message}</p>
-
-                  {alert.scoreChange && (
-                    <div className="flex items-center gap-2 mt-3 text-sm">
-                      <TrendingDown className="w-4 h-4 text-red-600" />
-                      <span className="text-red-600 font-medium">Score dropped {Math.abs(alert.scoreChange)} points</span>
-                      <span className="text-gray-500">({alert.previousScore} → {alert.currentScore})</span>
-                    </div>
                   )}
                 </div>
+                <h3 className="font-semibold">{alert.farmerName}</h3>
+                <p className="text-sm text-gray-500 mt-1">{alert.message}</p>
 
-                <div className="flex flex-col items-end gap-2">
-                  <div className="flex items-center gap-1 text-sm text-gray-500">
-                    <Clock className="w-4 h-4" />
-                    {formatTimestamp(alert.timestamp)}
+                {alert.scoreChange && (
+                  <div className="flex flex-wrap items-center gap-2 mt-2 text-sm">
+                    <TrendingDown className="w-4 h-4 text-red-600" />
+                    <span className="text-red-600 font-medium">Score dropped {Math.abs(alert.scoreChange)} points</span>
+                    <span className="text-gray-500">({alert.previousScore} → {alert.currentScore})</span>
                   </div>
-                  {!alert.isResolved && (
-                    <button
-                      className="flex items-center gap-1 px-3 py-1 text-sm border rounded-lg border-gray-300 hover:bg-gray-50"
-                      onClick={() => handleResolve(alert.id)}
-                    >
-                      <CheckCircle className="w-4 h-4" /> Resolve
-                    </button>
-                  )}
+                )}
+              </div>
+
+              <div className="flex sm:flex-col items-start sm:items-end mt-2 sm:mt-0 gap-2 sm:gap-2">
+                <div className="flex items-center gap-1 text-sm text-gray-500">
+                  <Clock className="w-4 h-4" />
+                  {formatTimestamp(alert.timestamp)}
                 </div>
+                {!alert.isResolved && (
+                  <button
+                    className="flex items-center gap-1 px-3 py-1 text-sm border rounded-lg border-gray-300 hover:bg-gray-50"
+                    onClick={() => handleResolve(alert.id)}
+                  >
+                    <CheckCircle className="w-4 h-4" /> Resolve
+                  </button>
+                )}
               </div>
             </div>
           </div>
