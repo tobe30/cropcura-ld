@@ -61,40 +61,76 @@ const totalFarmers = 1240;
 
 /* ------------------ RECENT ACTIVITY ------------------ */
 
-function RecentActivity({ alerts }) {
-  const recentAlerts = alerts.slice(0, 5);
+function RecentActivity() {
+  const activities = [
+    {
+      name: "James Okello",
+      amount: "$14,700",
+      crop: "Maize",
+      score: 665,
+      date: "2025-11-28",
+    },
+    {
+      name: "Mary Okello",
+      amount: "$12,944",
+      crop: "Rice",
+      score: 619,
+      date: "2025-12-10",
+    },
+    {
+      name: "John Okello",
+      amount: "$17,190",
+      crop: "Cassava",
+      score: 754,
+      date: "2025-12-11",
+    },
+    {
+      name: "Sarah Okello",
+      amount: "$24,708",
+      crop: "Wheat",
+      score: 524,
+      date: "2025-12-04",
+    },
+    {
+      name: "David Okello",
+      amount: "$15,145",
+      crop: "Sorghum",
+      score: 298,
+      date: "2025-11-19",
+    },
+  ];
 
   return (
-    <div className="card bg-base-100 shadow-md">
-      <div className="card-body">
-        <h3 className="card-title">Recent Activity</h3>
+    <div className="bg-white border border-gray-200 rounded-lg shadow-md p-5">
+      <h3 className="text-lg font-semibold mb-4">Recent Activity</h3>
 
-        <div className="space-y-3">
-          {recentAlerts.map((alert) => (
-            <div
-              key={alert.id}
-              className="flex items-start gap-3 p-3 rounded-lg bg-base-200"
-            >
-              <span
-                className={`w-2 h-2 mt-2 rounded-full ${
-                  alert.type === "critical"
-                    ? "bg-error"
-                    : alert.type === "warning"
-                    ? "bg-warning"
-                    : "bg-info"
-                }`}
-              />
-
-              <div className="flex-1">
-                <p className="font-medium">{alert.farmerName}</p>
-                <p className="text-sm opacity-70">{alert.message}</p>
-                <p className="text-xs opacity-50 mt-1">
-                  {new Date(alert.timestamp).toLocaleString()}
-                </p>
-              </div>
+      <div className="divide-y divide-gray-200">
+        {activities.map((item, index) => (
+          <div
+            key={index}
+            className="flex items-center justify-between py-4"
+          >
+            {/* LEFT */}
+            <div>
+              <p className="font-medium text-gray-900">
+                {item.name}
+              </p>
+              <p className="text-sm text-gray-500">
+                Applied for {item.amount} – {item.crop}
+              </p>
             </div>
-          ))}
-        </div>
+
+            {/* RIGHT */}
+            <div className="text-right">
+              <p className="font-semibold text-gray-900">
+                Score: {item.score}
+              </p>
+              <p className="text-sm text-gray-500">
+                {item.date}
+              </p>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -237,24 +273,10 @@ export default function Dashboard() {
       </div>
 
       {/* Activity & API */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-5">
+      <div className="grid grid-cols-1 gap-6 mb-5">
         <RecentActivity alerts={alerts} />
 
-        <div className="card bg-base-100 shadow">
-          <div className="card-body">
-            <h3 className="card-title">CropCura API Integration</h3>
-
-            <div className="mockup-code">
-              <pre data-prefix="$">
-                <code>GET /api/v1/scores/FRM-1001</code>
-              </pre>
-            </div>
-
-            <p className="text-sm opacity-70">
-              Real-time score updates via AI & satellite imagery
-            </p>
-          </div>
-        </div>
+        
       </div>
     </div>
   );

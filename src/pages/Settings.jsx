@@ -49,7 +49,7 @@ export default function Settings() {
         {/* Risk Thresholds */}
         <div className="border border-gray-300 rounded-xl shadow-sm p-6 space-y-6 bg-white">
           <div className="flex items-center gap-2 mb-4">
-            <Shield className="w-5 h-5 text-green-600" />
+            <Shield className="w-5 h-5 text-green-700" />
             <h2 className="font-semibold text-lg text-gray-800">Risk Thresholds</h2>
           </div>
 

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Search, LayoutGrid, List, MapPin, Wheat, ChevronDown } from 'lucide-react';
+import { Search, LayoutGrid, List, MapPin, Wheat, ChevronDown, Mail, Phone } from 'lucide-react';
 import FarmFieldsModal from '../components/FarmFieldsModal';
 
 export default function Farmers() {
@@ -10,6 +10,8 @@ export default function Farmers() {
       location: "Nairobi",
       cropType: "maize",
       farmSize: 37,
+      mail: "farmer1@cropcura.demo",
+      phone: "+254700123456",
       cropCuraScore: "85%",
       riskLevel: "low",
       fieldsCount: 3,
@@ -26,6 +28,8 @@ export default function Farmers() {
       location: "Kisumu",
       cropType: "rice",
       farmSize: 24,
+      mail: "farmer1@cropcura.demo",
+      phone: "+254701234567",
       cropCuraScore: "78%",
       riskLevel: "medium",
       fieldsCount: 2,
@@ -160,6 +164,14 @@ export default function Farmers() {
                 <div className="flex items-center gap-2">
                   <Wheat className="w-4 h-4 text-gray-400" />
                   <span className="capitalize">{farmer.cropType} • {farmer.farmSize} ha</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Mail className="w-4 h-4 text-gray-400" />
+                  <span>{farmer.mail}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Phone className="w-4 h-4 text-gray-400" />
+                  <span>{farmer.phone}</span>
                 </div>
               </div>
               <div className="flex justify-between items-center pt-3 border-t border-gray-200">
