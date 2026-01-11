@@ -1,13 +1,42 @@
+/* Import Google Font */
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+/* Tailwind and DaisyUI */
 @import "tailwindcss";
 @plugin "daisyui";
 
-
-*{
-   font-family: "Outfit", sans-serif;
+/* Set global font */
+* {
+  font-family: "Outfit", sans-serif;
 }
 
-:root {
+/* Force light theme and prevent mobile dark mode fading */
+html[data-theme="light"] {
   --color-primary: #083719;
   --color-primary-foreground: #ffffff;
+
+  /* Optional DaisyUI defaults */
+  --rounded-box: 1rem;
+  --rounded-btn: 0.5rem;
+  --rounded-badge: 1.9rem;
+  --animation-btn: 0.25s;
+  --animation-input: 0.2s;
+  --btn-text-case: uppercase;
+  --btn-focus-scale: 0.95;
+  --border-btn: 1px;
+  --tab-border: 1px;
+  --tab-radius: 0.5rem;
+}
+
+/* Prevent mobile browsers from auto-darkening your colors */
+:root {
+  color-scheme: light;
+  --color-primary: #083719;
+  --color-primary-foreground: #ffffff;
+}
+
+/* Optional: force Tailwind background/text defaults if needed */
+body {
+  background-color: white;
+  color: black;
 }

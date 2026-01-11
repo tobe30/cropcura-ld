@@ -69,10 +69,11 @@ export default function FarmFieldsModal({ farmer, onClose }) {
           {/* MAP */}
           <div className="relative flex-1 h-[300px] sm:h-auto">
             <MapContainer
-              center={[-1.286, 36.8219]}
-              zoom={11}
-              className="h-full w-full"
-            >
+        center={[9.082, 8.6753]} // Nigeria fallback
+        zoom={11}
+        className="h-full w-full"
+>
+
               <FocusBounds field={selectedField} />
               <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
               <TileLayer url="https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}" />
