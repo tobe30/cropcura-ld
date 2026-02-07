@@ -1,10 +1,17 @@
 import { useState } from 'react';
-import { Search, Filter, Check, X, Eye, ChevronDown } from 'lucide-react';
+import { Search, Filter, Check, X, Eye, ChevronDown, Pencil } from 'lucide-react';
+
 
 // Mock data
+
+const cropImages = {
+  rice: "/corn-banner.jpg",
+  
+};
+
+
 const mockLoans = [
-  { id: 'LN-1001', farmerName: 'John Doe', loanAmount: 5000, cropType: 'maize', cropCuraScore: 720, status: 'pending', location: 'Lagos', farmSize: 3, purpose: 'Seed purchase', term: 12, interestRate: 5, applicationDate: '2025-12-01' },
-  { id: 'LN-1002', farmerName: 'Jane Smith', loanAmount: 8000, cropType: 'rice', cropCuraScore: 680, status: 'approved', location: 'Kaduna', farmSize: 5, purpose: 'Fertilizer', term: 18, interestRate: 6, applicationDate: '2025-12-05' },
+  { id: 'LN-1001', farmerName: 'Amara Okonkwo', loanAmount: 200000, cropType: 'maize', cropCuraScore: 720, status: 'pending', location: 'Lagos', farmSize: 3, purpose: 'Seed purchase', term: 12, interestRate: 5, applicationDate: '2025-12-01' },
 ];
 
 export default function Applications() {
@@ -13,6 +20,10 @@ export default function Applications() {
   const [statusFilter, setStatusFilter] = useState('all');
   const [selectedLoan, setSelectedLoan] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isEditingTermRate, setIsEditingTermRate] = useState(false);
+  const [editTerm, setEditTerm] = useState("");
+  const [editRate, setEditRate] = useState("");
+
 
   const filteredLoans = loans.filter((loan) => {
     const matchesSearch =
@@ -39,6 +50,25 @@ export default function Applications() {
     if (score >= 650) return { text: 'Manual Review Required', color: 'text-yellow-500' };
     return { text: 'High Risk - Review Carefully', color: 'text-red-600' };
   };
+
+  const handleSaveTermRate = () => {
+  setLoans(prev =>
+    prev.map(loan =>
+      loan.id === selectedLoan.id
+        ? { ...loan, term: Number(editTerm), interestRate: Number(editRate) }
+        : loan
+    )
+  );
+
+  setSelectedLoan(prev => ({
+    ...prev,
+    term: Number(editTerm),
+    interestRate: Number(editRate),
+  }));
+
+  setIsEditingTermRate(false);
+};
+
 
   const statusOptions = [
     { label: 'All Applications', value: 'all' },
@@ -130,7 +160,7 @@ export default function Applications() {
                     <p className="font-medium">{loan.farmerName}</p>
                     <p className="text-sm text-gray-500">{loan.id}</p>
                   </td>
-                  <td className="px-6 py-4 font-medium">${loan.loanAmount.toLocaleString()}</td>
+                  <td className="px-6 py-4 font-medium">₦{loan.loanAmount.toLocaleString()}</td>
                   <td className="px-6 py-4 capitalize">{loan.cropType}</td>
                   <td className="px-6 py-4">
                     <span
@@ -181,7 +211,8 @@ export default function Applications() {
       {/* Modal */}
       {selectedLoan && (
         <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg max-w-2xl w-full p-6 space-y-6 border border-gray-300 shadow-lg relative">
+         <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 space-y-6 border border-gray-300 shadow-lg relative">
+
             <button
               className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
               onClick={() => setSelectedLoan(null)}
@@ -206,25 +237,95 @@ export default function Applications() {
                   <p className="text-sm text-gray-500">Farm Size</p>
                   <p className="font-medium">{selectedLoan.farmSize} hectares</p>
                 </div>
-                <div>
-                  <p className="text-sm text-gray-500">Primary Crop</p>
-                  <p className="font-medium capitalize">{selectedLoan.cropType}</p>
-                </div>
+               <div>
+  <p className="text-sm text-gray-500">Primary Crop</p>
+
+  <p className="font-medium capitalize mb-2">
+    {selectedLoan.cropType}
+  </p>
+
+<img
+  src={cropImages[selectedLoan.cropType]}
+  alt={selectedLoan.cropType}
+  className="w-full h-28 object-cover rounded-lg border"
+  onError={(e) => {
+    e.currentTarget.src = cropImages.maize;
+  }}
+/>
+
+</div>
+
               </div>
 
               <div className="space-y-4">
                 <div>
                   <p className="text-sm text-gray-500">Loan Amount</p>
-                  <p className="text-2xl font-bold">${selectedLoan.loanAmount.toLocaleString()}</p>
+                  <p className="text-2xl font-bold">₦{selectedLoan.loanAmount.toLocaleString()}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Purpose</p>
                   <p className="font-medium">{selectedLoan.purpose}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Term & Rate</p>
-                  <p className="font-medium">{selectedLoan.term} months at {selectedLoan.interestRate}%</p>
-                </div>
+  <div className="flex items-center justify-between">
+    <p className="text-sm text-gray-500">Term & Rate</p>
+
+    {!isEditingTermRate && (
+      <button
+        onClick={() => {
+          setEditTerm(selectedLoan.term);
+          setEditRate(selectedLoan.interestRate);
+          setIsEditingTermRate(true);
+        }}
+        className="text-gray-400 hover:text-gray-600"
+      >
+        <Pencil className="w-4 h-4" />
+      </button>
+    )}
+  </div>
+
+  {!isEditingTermRate ? (
+    <p className="font-medium">
+      {selectedLoan.term} months at {selectedLoan.interestRate}%
+    </p>
+  ) : (
+    <div className="space-y-2 mt-2">
+      <div className="flex gap-2">
+        <input
+          type="number"
+          value={editTerm}
+          onChange={(e) => setEditTerm(e.target.value)}
+          className="w-1/2 px-3 py-2 border rounded-lg text-sm"
+          placeholder="Months"
+        />
+        <input
+          type="number"
+          value={editRate}
+          onChange={(e) => setEditRate(e.target.value)}
+          className="w-1/2 px-3 py-2 border rounded-lg text-sm"
+          placeholder="% Rate"
+        />
+      </div>
+
+      <div className="flex gap-3">
+        <button
+          onClick={handleSaveTermRate}
+          className="flex items-center gap-1 text-green-600 text-sm font-medium"
+        >
+          <Check className="w-4 h-4" /> Save
+        </button>
+
+        <button
+          onClick={() => setIsEditingTermRate(false)}
+          className="flex items-center gap-1 text-gray-500 text-sm font-medium"
+        >
+          <X className="w-4 h-4" /> Cancel
+        </button>
+      </div>
+    </div>
+  )}
+</div>
+
                 <div>
                   <p className="text-sm text-gray-500">Application Date</p>
                   <p className="font-medium">{new Date(selectedLoan.applicationDate).toLocaleDateString()}</p>

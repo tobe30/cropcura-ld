@@ -7,7 +7,8 @@ import {
   AlertTriangle,
   Settings,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  TrendingUp
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
@@ -16,6 +17,7 @@ const navItems = [
   { to: "/applications", icon: FileText, label: "Loan Applications" },
   { to: "/farmers", icon: Users, label: "Farm Directory" },
   { to: "/alerts", icon: AlertTriangle, label: "Risk Alerts" },
+  { to: "/credit-score", icon: TrendingUp, label: "Credit Score" },
   { to: "/settings", icon: Settings, label: "Settings" }
 ];
 

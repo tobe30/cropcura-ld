@@ -17,20 +17,66 @@ export default function Farmers() {
       fieldsCount: 3,
       healthSummary: { healthy: 2, moderate: 1 },
       fields: [
-        { id: "f1", name: "Main Maize Plot", crop: "Maize", area: "2.5 ha", health: "healthy", updated: "Jan 12, 2024", polygon: [
-      [6.4475, 7.4980],
-      [6.4475, 7.5040],
-      [6.4525, 7.5040],
-      [6.4525, 7.4980],
-    ], },
-        { id: "f2", name: "South Rice Field", crop: "Rice", area: "1.8 ha", health: "moderate", updated: "Jan 10, 2024", polygon: [[6.4410, 7.4920],
-      [6.4410, 7.4975],
-      [6.4460, 7.4975],
-      [6.4460, 7.4920],] },
-        { id: "f3", name: "Eastern Cassava Farm", crop: "Cassava", area: "6.2 ha", health: "healthy", updated: "Jan 15, 2024", polygon: [[6.4540, 7.5060],
-      [6.4540, 7.5120],
-      [6.4590, 7.5120],
-      [6.4590, 7.5060],] },
+        {
+          id: "f1",
+          name: "Main Maize Plot",
+          crop: "Maize",
+          area: "2.5 ha",
+          health: "healthy",
+          updated: "Jan 12, 2024",
+          polygon: [
+            [6.4475, 7.4980],
+            [6.4475, 7.5040],
+            [6.4525, 7.5040],
+            [6.4525, 7.4980],
+          ],
+          scans: [
+            {
+              id: "s1",
+              image: "https://source.unsplash.com/400x300/?maize,leaf",
+              result: "Healthy",
+              confidence: "92%",
+              date: "Jan 12, 2024",
+            },
+            {
+              id: "s2",
+              image: "https://source.unsplash.com/400x300/?maize,disease",
+              result: "Nitrogen Deficiency",
+              confidence: "78%",
+              date: "Jan 10, 2024",
+            },
+          ],
+        },
+        {
+          id: "f2",
+          name: "South Rice Field",
+          crop: "Rice",
+          area: "1.8 ha",
+          health: "moderate",
+          updated: "Jan 10, 2024",
+          polygon: [
+            [6.4410, 7.4920],
+            [6.4410, 7.4975],
+            [6.4460, 7.4975],
+            [6.4460, 7.4920],
+          ],
+          scans: [],
+        },
+        {
+          id: "f3",
+          name: "Eastern Cassava Farm",
+          crop: "Cassava",
+          area: "6.2 ha",
+          health: "healthy",
+          updated: "Jan 15, 2024",
+          polygon: [
+            [6.4540, 7.5060],
+            [6.4540, 7.5120],
+            [6.4590, 7.5120],
+            [6.4590, 7.5060],
+          ],
+          scans: [],
+        },
       ],
     },
     {
@@ -46,8 +92,36 @@ export default function Farmers() {
       fieldsCount: 2,
       healthSummary: { healthy: 1, moderate: 1 },
       fields: [
-        { id: "f1", name: "North Field", crop: "Rice", area: "2 ha", health: "healthy", updated: "Jan 11, 2024", polygon: [[-0.091, 34.768], [-0.091, 34.772], [-0.087, 34.772], [-0.087, 34.768]] },
-        { id: "f2", name: "South Field", crop: "Rice", area: "1.5 ha", health: "moderate", updated: "Jan 12, 2024", polygon: [[-0.092, 34.765], [-0.092, 34.768], [-0.088, 34.768], [-0.088, 34.765]] },
+        {
+          id: "f1",
+          name: "North Field",
+          crop: "Rice",
+          area: "2 ha",
+          health: "healthy",
+          updated: "Jan 11, 2024",
+          polygon: [
+            [-0.091, 34.768],
+            [-0.091, 34.772],
+            [-0.087, 34.772],
+            [-0.087, 34.768],
+          ],
+          scans: [],
+        },
+        {
+          id: "f2",
+          name: "South Field",
+          crop: "Rice",
+          area: "1.5 ha",
+          health: "moderate",
+          updated: "Jan 12, 2024",
+          polygon: [
+            [-0.092, 34.765],
+            [-0.092, 34.768],
+            [-0.088, 34.768],
+            [-0.088, 34.765],
+          ],
+          scans: [],
+        },
       ],
     },
   ];
@@ -160,13 +234,19 @@ export default function Farmers() {
               className="bg-white border border-gray-200 rounded-xl p-5 shadow-md hover:shadow-xl transition cursor-pointer"
               onClick={() => handleFarmerClick(farmer)}
             >
-              <div className="flex items-start justify-between mb-3">
-                <div>
-                  <h2 className="font-semibold text-gray-800 text-lg hover:text-blue-600">{farmer.name}</h2>
-                  <p className="text-sm text-gray-500">{farmer.id}</p>
-                </div>
-                <span className="text-2xl">{cropIcons[farmer.cropType]}</span>
-              </div>
+             <div className="flex items-start justify-between mb-3">
+  <div>
+    <h2 className="font-semibold text-gray-800 text-lg hover:text-blue-600">{farmer.name}</h2>
+    <p className="text-sm text-gray-500">{farmer.id}</p>
+  </div>
+  {/* Profile Image instead of crop icon */}
+  <img
+    src={farmer.profileImage || 'https://source.unsplash.com/40x40/?face'}
+    alt={farmer.name}
+    className="w-10 h-10 rounded-full object-cover border border-gray-300"
+  />
+</div>
+
               <div className="space-y-2 mb-4 text-sm text-gray-600">
                 <div className="flex items-center gap-2">
                   <MapPin className="w-4 h-4 text-gray-400" />

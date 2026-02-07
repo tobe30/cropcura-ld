@@ -12,6 +12,8 @@ import {
   Cell,
   Legend,
 } from "recharts";
+import { useNavigate } from "react-router-dom";
+
 
 /* ------------------ CUSTOM DASHBOARD DATA ------------------ */
 
@@ -65,35 +67,35 @@ function RecentActivity() {
   const activities = [
     {
       name: "James Okello",
-      amount: "$14,700",
+      amount: "₦140,700",
       crop: "Maize",
       score: 665,
       date: "2025-11-28",
     },
     {
-      name: "Mary Okello",
-      amount: "$12,944",
+      name: "Mary Oba",
+      amount: "₦120,944",
       crop: "Rice",
       score: 619,
       date: "2025-12-10",
     },
     {
-      name: "John Okello",
-      amount: "$17,190",
+      name: "John Tolu",
+      amount: "₦107,190",
       crop: "Cassava",
       score: 754,
       date: "2025-12-11",
     },
     {
-      name: "Sarah Okello",
-      amount: "$24,708",
+      name: "Sarah Ahames",
+      amount: "₦204,708",
       crop: "Wheat",
       score: 524,
       date: "2025-12-04",
     },
     {
-      name: "David Okello",
-      amount: "$15,145",
+      name: "David Marizu",
+      amount: "₦150,145",
       crop: "Sorghum",
       score: 298,
       date: "2025-11-19",
@@ -139,6 +141,8 @@ function RecentActivity() {
 /* ------------------ DASHBOARD ------------------ */
 
 export default function Dashboard() {
+  const navigate = useNavigate();
+
   const highRiskCount = alerts.filter(
     (a) => a.type === "critical" && !a.isResolved
   ).length;
@@ -156,7 +160,8 @@ export default function Dashboard() {
 
       {/* Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-       <div className="bg-base-100 rounded-2xl shadow-md p-6 min-h-[140px] flex flex-col justify-between">
+        
+       <div  onClick={() => navigate("/farmers")} className="bg-base-100 rounded-2xl shadow-md p-6 min-h-[140px] flex flex-col justify-between">
   <div className="flex items-center justify-between">
     <p className="text-sm font-medium opacity-70">Total Farmers</p>
     <div className="p-3 rounded-xl bg-primary/10 text-primary">
@@ -171,7 +176,7 @@ export default function Dashboard() {
 </div>
 
 
-        <div className="bg-warning/5 rounded-2xl shadow-md p-6 min-h-[140px] flex flex-col justify-between">
+        <div  onClick={() => navigate("/applications")} className="bg-warning/5 rounded-2xl shadow-md p-6 min-h-[140px] flex flex-col justify-between">
   <div className="flex justify-between items-center">
     <p className="text-sm font-medium opacity-70">Pending Applications</p>
     <div className="p-3 rounded-xl bg-warning/15 text-warning">
@@ -183,9 +188,9 @@ export default function Dashboard() {
 </div>
 
 
-        <div className="bg-success/5 rounded-2xl shadow-md p-6 min-h-[140px] flex flex-col justify-between">
+        <div  onClick={() => navigate("/")} className="bg-success/5 rounded-2xl shadow-md p-6 min-h-[140px] flex flex-col justify-between">
   <div className="flex justify-between items-center">
-    <p className="text-sm font-medium opacity-70">Average CropCura Score</p>
+    <p className="text-sm font-medium opacity-70">Average Credit Score</p>
     <div className="p-3 rounded-xl bg-success/15 text-success">
       <TrendingUp />
     </div>
@@ -198,7 +203,7 @@ export default function Dashboard() {
 </div>
 
 
-        <div className="bg-error/5 rounded-2xl shadow-md p-6 min-h-[140px] flex flex-col justify-between">
+        <div  onClick={() => navigate("/alerts")} className="bg-error/5 rounded-2xl shadow-md p-6 min-h-[140px] flex flex-col justify-between">
   <div className="flex justify-between items-center">
     <p className="text-sm font-medium opacity-70">High Risk Alerts</p>
     <div className="p-3 rounded-xl bg-error/15 text-error">
