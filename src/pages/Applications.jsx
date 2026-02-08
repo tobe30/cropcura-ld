@@ -4,7 +4,6 @@ import riceImg from "../assets/rice.jpg";
 import maizeImg from "../assets/corn.jpg";
 import maize2Img from "../assets/maize2.jpg";
 import maize3Img from "../assets/maize3.jpg";
-import maize4Img from "../assets/maize4.jpg";
 
 
 import cassavaImg from "../assets/cassava.jpg";
@@ -17,7 +16,6 @@ const cropImages = {
     maizeImg,
     maize2Img,
     maize3Img,
-    maize4Img
 
   ],
   cassava: [cassavaImg],
@@ -236,8 +234,9 @@ export default function Applications() {
         className="text-gray-500 hover:text-gray-700"
         onClick={() => alert('Download PDF is coming soon')}
       >
-        <Download className="w-5 h-5" />
+        <Download className="w-5 h-5" /> 
       </button>
+        <p className='text-gray-500'> Download Farm Profile</p>
 
       <button
         className="text-gray-500 hover:text-gray-700"
@@ -248,7 +247,7 @@ export default function Applications() {
     </div>
 
             <h2 className="text-xl font-bold">Loan Application Details</h2>
-            <p className="text-gray-500">Application {selectedLoan.id}</p>
+            <p className="text-gray-500">Summary of Farmer Profile {selectedLoan.id}</p>
 
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-4">
@@ -375,7 +374,7 @@ export default function Applications() {
 
             <div className="p-4 rounded-lg bg-gray-50 border border-gray-300">
               <div className="flex items-center justify-between mb-3">
-                <p className="font-semibold">CropCura Score Assessment</p>
+                <p className="font-semibold">Credit Score Assessment</p>
                 <span
                   className={`px-3 py-1 rounded-full text-white ${
                     selectedLoan.cropCuraScore >= 700
