@@ -7,6 +7,7 @@ import Applications from './pages/Applications'
 import Alerts from './pages/Alerts'
 import Settings from './pages/Settings'
 import Farmers from './pages/Farmers'
+import CreditScore from './pages/CreditScore'
 
 const App = () => {
   return (
@@ -22,6 +23,8 @@ const App = () => {
         <Route path='alerts' element={<Alerts/>}/>
         <Route path='settings' element={<Settings/>}/>
         <Route path='farmers' element={<Farmers/>}/>
+        <Route path='credit-score' element={<CreditScore/>}/>
+
       </Route>
 
       {/* Catch-all for unknown paths */}

@@ -1,13 +1,20 @@
 import { useState, useRef, useEffect } from 'react';
 import { Search, LayoutGrid, List, MapPin, Wheat, ChevronDown, Mail, Phone } from 'lucide-react';
 import FarmFieldsModal from '../components/FarmFieldsModal';
+import avatar from "../assets/default.jpg";
+import riceImg from "../assets/rice.jpg";
+import maizeImg from "../assets/corn.jpg";
+import cassavaImg from "../assets/cassava.jpg";
 
 export default function Farmers() {
   const farmers = [
     {
-      id: "F001",
+      id: "LN-1001",
       name: "Amara Okonkwo",
-      location: "Nigeria",
+      location: "Nigeria",    
+      // Geo coordinates (farm centroid or HQ)
+      latitude: 7.4989,
+      longitude: 6.4512,
       cropType: "maize",
       farmSize: 37,
       mail: "farmer1@cropcura.demo",
@@ -33,18 +40,18 @@ export default function Farmers() {
           scans: [
             {
               id: "s1",
-              image: "https://source.unsplash.com/400x300/?maize,leaf",
+              image: maizeImg,
               result: "Healthy",
               confidence: "92%",
               date: "Jan 12, 2024",
             },
-            {
-              id: "s2",
-              image: "https://source.unsplash.com/400x300/?maize,disease",
-              result: "Nitrogen Deficiency",
-              confidence: "78%",
-              date: "Jan 10, 2024",
-            },
+            // {
+            //   id: "s2",
+            //   image: cassavaImg,
+            //   result: "Nitrogen Deficiency",
+            //   confidence: "78%",
+            //   date: "Jan 10, 2024",
+            // },
           ],
         },
         {
@@ -79,51 +86,7 @@ export default function Farmers() {
         },
       ],
     },
-    {
-      id: "F002",
-      name: "Kachi Marizu",
-      location: "Nigeria",
-      cropType: "rice",
-      farmSize: 24,
-      mail: "farmer1@cropcura.demo",
-      phone: "+2348033217349",
-      cropCuraScore: "78%",
-      riskLevel: "medium",
-      fieldsCount: 2,
-      healthSummary: { healthy: 1, moderate: 1 },
-      fields: [
-        {
-          id: "f1",
-          name: "North Field",
-          crop: "Rice",
-          area: "2 ha",
-          health: "healthy",
-          updated: "Jan 11, 2024",
-          polygon: [
-            [-0.091, 34.768],
-            [-0.091, 34.772],
-            [-0.087, 34.772],
-            [-0.087, 34.768],
-          ],
-          scans: [],
-        },
-        {
-          id: "f2",
-          name: "South Field",
-          crop: "Rice",
-          area: "1.5 ha",
-          health: "moderate",
-          updated: "Jan 12, 2024",
-          polygon: [
-            [-0.092, 34.765],
-            [-0.092, 34.768],
-            [-0.088, 34.768],
-            [-0.088, 34.765],
-          ],
-          scans: [],
-        },
-      ],
-    },
+
   ];
 
   const [search, setSearch] = useState('');
@@ -134,7 +97,6 @@ export default function Farmers() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const cropIcons = { maize: '🌽', rice: '🌾', cassava: '🥔', wheat: '🌿', soybeans: '🫘' };
   const riskColors = { low: 'bg-green-100 text-green-700', medium: 'bg-yellow-100 text-yellow-800', high: 'bg-red-100 text-red-700' };
   const riskOptions = [
     { label: 'All Risk Levels', value: 'all' },
@@ -241,17 +203,23 @@ export default function Farmers() {
   </div>
   {/* Profile Image instead of crop icon */}
   <img
-    src={farmer.profileImage || 'https://source.unsplash.com/40x40/?face'}
+    src={avatar || 'https://source.unsplash.com/40x40/?face'}
     alt={farmer.name}
     className="w-10 h-10 rounded-full object-cover border border-gray-300"
   />
 </div>
 
               <div className="space-y-2 mb-4 text-sm text-gray-600">
-                <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-gray-400" />
-                  <span>{farmer.location}</span>
-                </div>
+                <div className="flex items-start gap-2">
+  <MapPin className="w-4 h-4 text-gray-400 mt-0.5" />
+  <div className="text-sm">
+    <p className="text-gray-700">{farmer.location}</p>
+    <p className="text-xs text-gray-400">
+      Lat: {farmer.latitude}, Lng: {farmer.longitude}
+    </p>
+  </div>
+</div>
+
                 <div className="flex items-center gap-2">
                   <Wheat className="w-4 h-4 text-gray-400" />
                   <span className="capitalize">{farmer.cropType} • {farmer.farmSize} ha</span>

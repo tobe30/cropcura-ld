@@ -1,13 +1,17 @@
 import { useState } from 'react';
 import { Search, Filter, Check, X, Eye, ChevronDown, Pencil } from 'lucide-react';
-
+import riceImg from "../assets/rice.jpg";
+import maizeImg from "../assets/corn.jpg";
+import cassavaImg from "../assets/cassava.jpg";
 
 // Mock data
 
 const cropImages = {
-  rice: "/corn-banner.jpg",
-  
+  rice: riceImg,
+  maize: maizeImg,
+  cassava: cassavaImg,
 };
+
 
 
 const mockLoans = [

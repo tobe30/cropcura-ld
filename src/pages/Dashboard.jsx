@@ -59,7 +59,7 @@ const alerts = [
 ];
 
 const pendingCount = 18;
-const totalFarmers = 1240;
+const totalFarmers =540;
 
 /* ------------------ RECENT ACTIVITY ------------------ */
 
