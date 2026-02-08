@@ -1,21 +1,34 @@
 import { useState } from 'react';
-import { Search, Filter, Check, X, Eye, ChevronDown, Pencil } from 'lucide-react';
+import { Search, Filter, Check, X, Eye, ChevronDown, Pencil, Download } from 'lucide-react';
 import riceImg from "../assets/rice.jpg";
 import maizeImg from "../assets/corn.jpg";
+import maize2Img from "../assets/maize2.jpg";
+import maize3Img from "../assets/maize3.jpg";
+import maize4Img from "../assets/maize4.jpg";
+
+
 import cassavaImg from "../assets/cassava.jpg";
 
 // Mock data
 
 const cropImages = {
-  rice: riceImg,
-  maize: maizeImg,
-  cassava: cassavaImg,
+  rice: [riceImg],
+  maize: [
+    maizeImg,
+    maize2Img,
+    maize3Img,
+    maize4Img
+
+  ],
+  cassava: [cassavaImg],
 };
 
 
 
+
 const mockLoans = [
-  { id: 'LN-1001', farmerName: 'Amara Okonkwo', loanAmount: 200000, cropType: 'maize', cropCuraScore: 720, status: 'pending', location: 'Lagos', farmSize: 3, purpose: 'Seed purchase', term: 12, interestRate: 5, applicationDate: '2025-12-01' },
+  { id: 'LN-1001', farmerName: 'Amara Okonkwo', loanAmount: 1000000, cropType: 'maize', cropCuraScore: 720, status: 'pending', location: 'Enugu',  latitude: 6.5244,
+    longitude: 3.3792, farmSize: 3, purpose: 'Seed purchase', term: 12, interestRate: 5, applicationDate: '2026-01-01' },
 ];
 
 export default function Applications() {
@@ -141,7 +154,7 @@ export default function Applications() {
               <th className="px-6 py-3 text-left text-sm font-semibold">Farmer Name</th>
               <th className="px-6 py-3 text-left text-sm font-semibold">Loan Amount</th>
               <th className="px-6 py-3 text-left text-sm font-semibold">Crop Type</th>
-              <th className="px-6 py-3 text-left text-sm font-semibold">CropCura Score</th>
+              <th className="px-6 py-3 text-left text-sm font-semibold">Credit Score</th>
               <th className="px-6 py-3 text-left text-sm font-semibold">Status</th>
               <th className="px-6 py-3 text-right text-sm font-semibold">Actions</th>
             </tr>
@@ -217,12 +230,22 @@ export default function Applications() {
         <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4">
          <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 space-y-6 border border-gray-300 shadow-lg relative">
 
-            <button
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
-              onClick={() => setSelectedLoan(null)}
-            >
-              <X className="w-5 h-5" />
-            </button>
+            {/* Close and Download Buttons */}
+    <div className="absolute top-4 right-4 flex gap-2">
+      <button
+        className="text-gray-500 hover:text-gray-700"
+        onClick={() => alert('Download PDF is coming soon')}
+      >
+        <Download className="w-5 h-5" />
+      </button>
+
+      <button
+        className="text-gray-500 hover:text-gray-700"
+        onClick={() => setSelectedLoan(null)}
+      >
+        <X className="w-5 h-5" />
+      </button>
+    </div>
 
             <h2 className="text-xl font-bold">Loan Application Details</h2>
             <p className="text-gray-500">Application {selectedLoan.id}</p>
@@ -234,9 +257,17 @@ export default function Applications() {
                   <p className="font-medium">{selectedLoan.farmerName}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Location</p>
-                  <p className="font-medium">{selectedLoan.location}</p>
-                </div>
+  <p className="text-sm text-gray-500">Location</p>
+
+  <p className="font-medium">{selectedLoan.location}</p>
+
+  {(selectedLoan.latitude && selectedLoan.longitude) && (
+    <p className="text-xs text-gray-500 mt-1">
+      Lat: {selectedLoan.latitude}, Lng: {selectedLoan.longitude}
+    </p>
+  )}
+</div>
+
                 <div>
                   <p className="text-sm text-gray-500">Farm Size</p>
                   <p className="font-medium">{selectedLoan.farmSize} hectares</p>
@@ -248,14 +279,19 @@ export default function Applications() {
     {selectedLoan.cropType}
   </p>
 
-<img
-  src={cropImages[selectedLoan.cropType]}
-  alt={selectedLoan.cropType}
-  className="w-full h-28 object-cover rounded-lg border"
-  onError={(e) => {
-    e.currentTarget.src = cropImages.maize;
-  }}
-/>
+<div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+  {cropImages[selectedLoan.cropType]?.map((img, index) => (
+    <img
+      key={index}
+      src={img}
+      alt={`${selectedLoan.cropType} scan ${index + 1}`}
+      className="w-full h-24 sm:h-28 object-cover rounded-lg border hover:scale-105 transition"
+      onError={(e) => {
+        e.currentTarget.src = maizeImg;
+      }}
+    />
+  ))}
+</div>
 
 </div>
 

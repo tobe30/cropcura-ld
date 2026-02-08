@@ -137,7 +137,7 @@ export default function Login() {
           </form>
 
           <div className="text-center mt-6 text-gray-400 text-sm">
-            © 2025 CropCura. All rights reserved.
+            © 2026 CropCura. All rights reserved.
           </div>
         </div>
       </div>

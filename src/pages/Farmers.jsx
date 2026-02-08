@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Search, LayoutGrid, List, MapPin, Wheat, ChevronDown, Mail, Phone } from 'lucide-react';
 import FarmFieldsModal from '../components/FarmFieldsModal';
-import avatar from "../assets/default.jpg";
+import avatar from "../assets/avatar-08.jpg";
 import riceImg from "../assets/rice.jpg";
 import maizeImg from "../assets/corn.jpg";
 import cassavaImg from "../assets/cassava.jpg";
@@ -19,8 +19,8 @@ export default function Farmers() {
       farmSize: 37,
       mail: "farmer1@cropcura.demo",
       phone: "+2348122652108",
-      cropCuraScore: "85%",
-      riskLevel: "low",
+      // cropCuraScore: "85%",
+      // riskLevel: "low",
       fieldsCount: 3,
       healthSummary: { healthy: 2, moderate: 1 },
       fields: [
@@ -30,7 +30,7 @@ export default function Farmers() {
           crop: "Maize",
           area: "2.5 ha",
           health: "healthy",
-          updated: "Jan 12, 2024",
+          updated: "Jan 12, 2026",
           polygon: [
             [6.4475, 7.4980],
             [6.4475, 7.5040],
@@ -43,7 +43,7 @@ export default function Farmers() {
               image: maizeImg,
               result: "Healthy",
               confidence: "92%",
-              date: "Jan 12, 2024",
+              date: "Jan 12, 2026",
             },
             // {
             //   id: "s2",
@@ -60,14 +60,22 @@ export default function Farmers() {
           crop: "Rice",
           area: "1.8 ha",
           health: "moderate",
-          updated: "Jan 10, 2024",
+          updated: "Jan 10, 2026",
           polygon: [
             [6.4410, 7.4920],
             [6.4410, 7.4975],
             [6.4460, 7.4975],
             [6.4460, 7.4920],
           ],
-          scans: [],
+          scans: [
+             {
+               id: "s2",
+               image: riceImg,
+               result: "Nitrogen Deficiency",
+               confidence: "18%",
+               date: "Jan 10, 2026",
+             },
+          ],
         },
         {
           id: "f3",
@@ -75,14 +83,22 @@ export default function Farmers() {
           crop: "Cassava",
           area: "6.2 ha",
           health: "healthy",
-          updated: "Jan 15, 2024",
+          updated: "Jan 15, 2026",
           polygon: [
             [6.4540, 7.5060],
             [6.4540, 7.5120],
             [6.4590, 7.5120],
             [6.4590, 7.5060],
           ],
-          scans: [],
+          scans: [
+             {
+               id: "s2",
+               image: cassavaImg,
+               result: "Nitrogen Deficiency",
+               confidence: "48%",
+               date: "Jan 15, 2026",
+             },
+          ],
         },
       ],
     },
